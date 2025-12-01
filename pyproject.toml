@@ -1,0 +1,20 @@
+[project]
+name = "metadataset"
+version = "0.1.0"
+description = "Metagenomic dataset preparation toolkit"
+authors = [
+  { name="Shabnam Zareshahraki" }
+]
+requires-python = ">=3.8"
+
+dependencies = [
+  "requests",
+  "biopython",
+]
+
+[project.scripts]
+metadataset = "metadataset.cli:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
