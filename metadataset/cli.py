@@ -1,5 +1,5 @@
 
-from metadataset.download.manager import download_split
+from metadataset.download.manager import download_category
 import argparse
 
 def main():
@@ -17,7 +17,7 @@ def main():
     dl.add_argument('--base_dir', required=True, help='Dataset directory')
     dl.add_argument('--train_cutoff', required=True, help='Dataset training cutoff in the format DD-MM-YYYY')
     dl.add_argument('--val_cutoff', required=True, help='Dataset validation cutoff in format DD-MM-YYYY')
-    dl.add_argument('--test_end', required=True, help='Dataset test cutoff in format DD-MM-YYYY')
+    dl.add_argument('--test_cutoff', required=True, help='Dataset test cutoff in format DD-MM-YYYY')
 
     dl.add_argument('--assembly_level',
                     default='Complete Genome',
@@ -28,7 +28,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'download':
-        download_split(args.category, args.base_dir, args.train_cutoff, args.val_cutoff,)
+        download_category(args)
     else:
         parser.print_help()
 

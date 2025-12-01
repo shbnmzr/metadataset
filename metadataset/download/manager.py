@@ -12,11 +12,11 @@ def download_category(args):
     init_logging()
 
     category = args.category
-    allowed_types = [x.strip() for x in args.allowed_types.split(',')]
+    allowed_types = [x.strip() for x in args.assembly_level.split(',')]
     base_dir = Path(args.base_dir)
 
     train_cutoff = datetime.strptime(args.train_cutoff, '%Y-%m-%d')
-    valid_cutoff = datetime.strptime(args.valid_cutoff, '%Y-%m-%d')
+    val_cutoff = datetime.strptime(args.val_cutoff, '%Y-%m-%d')
     test_cutoff = datetime.strptime(args.test_cutoff, '%Y-%m-%d')
 
     raw_dir = base_dir / 'raw' / category
@@ -32,13 +32,13 @@ def download_category(args):
     download_summary(category, summary_file)
 
     # Step 2: Parse into splits
-    splits = parse_summary(summary_file, train_cutoff, valid_cutoff, test_cutoff, allowed_types)
+    splits = parse_summary(summary_file, train_cutoff, val_cutoff, test_cutoff, allowed_types)
 
     # Step 3: Write ftp_files
-    for split in ['train', 'val', 'test']:
-        paths = [p for p, _, _ in splits[split]]
-        save_paths(paths, meta_dir / f'{split}_ftp_paths.txt')
-        logging.info(f'Split {split.upper()}: {len(paths)} genomes')
+    for split in ["train", "val", "test"]:
+        paths = [p for p, _ in splits[split]]
+        save_paths(paths, meta_dir / f"{split}_ftp_paths.txt")
+        logging.info(f"Split {split.upper()}: {len(paths)} genomes")
 
     # Step 4: Download each split
     download_split('train', splits['train'], raw_dir / 'train', meta_dir, category)

@@ -54,7 +54,7 @@ def parse_summary(
 
     splits = {
         'train': [],
-        'validation': [],
+        'val': [],
         'test': [],
     }
 
@@ -73,7 +73,7 @@ def parse_summary(
 
             if assembly_type not in allowed_types:
                 continue
-            if version_status != 'lastest':
+            if version_status != 'latest':
                 continue
 
             try:
@@ -84,7 +84,7 @@ def parse_summary(
             if release_date <= train_cutoff:
                 splits['train'].append((ftp_path, release_date))
             elif release_date <= validation_cutoff:
-                splits['validation'].append((ftp_path, release_date))
+                splits['val'].append((ftp_path, release_date))
             elif release_date <= test_cutoff:
                 splits['test'].append((ftp_path, release_date))
 
